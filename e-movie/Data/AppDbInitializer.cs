@@ -136,6 +136,23 @@ namespace e_movie.Data
                     });
                     context.SaveChanges();
                 }
+                //comming
+                if (!context.CommingMovies.Any())
+                {
+                    context.CommingMovies.AddRange(new List<CommingMovie>()
+                    {
+                       
+                        new CommingMovie()
+                        {
+                            FullName = "Movie Scoot",
+                            ProfilePictureURL = "http://dotnethow.net/images/movies/movie-5.jpeg",
+                            Bio = "This movie is cooming soon"
+                        },
+
+                    });
+                    context.SaveChanges();
+                }
+              
                 //Movies
                 if (!context.Movies.Any())
                 {

@@ -282,6 +282,56 @@ namespace e_movie.Migrations
                     b.ToTable("Cinemas");
                 });
 
+            modelBuilder.Entity("e_movie.Models.Comedy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Bio")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("ProfilePictureURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Comedys");
+                });
+
+            modelBuilder.Entity("e_movie.Models.CommingMovie", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Bio")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("ProfilePictureURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CommingMovies");
+                });
+
             modelBuilder.Entity("e_movie.Models.Movie", b =>
                 {
                     b.Property<int>("Id")
@@ -290,6 +340,12 @@ namespace e_movie.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CinemaId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ComedyId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CommingMovieId")
                         .HasColumnType("int");
 
                     b.Property<string>("Desctription")
@@ -320,6 +376,10 @@ namespace e_movie.Migrations
 
                     b.HasIndex("CinemaId");
 
+                    b.HasIndex("ComedyId");
+
+                    b.HasIndex("CommingMovieId");
+
                     b.HasIndex("ProducerId");
 
                     b.ToTable("Movies");
@@ -336,9 +396,11 @@ namespace e_movie.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -493,11 +555,26 @@ namespace e_movie.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("e_movie.Models.Comedy", null)
+                        .WithMany("Movies")
+                        .HasForeignKey("ComedyId");
+
+                    b.HasOne("e_movie.Models.CommingMovie", null)
+                        .WithMany("Movies")
+                        .HasForeignKey("CommingMovieId");
+
                     b.HasOne("e_movie.Models.Producer", "Producer")
                         .WithMany("Movies")
                         .HasForeignKey("ProducerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("e_movie.Models.Order", b =>
+                {
+                    b.HasOne("e_movie.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("e_movie.Models.OrderItem", b =>

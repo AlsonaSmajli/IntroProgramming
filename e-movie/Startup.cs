@@ -38,9 +38,11 @@ namespace e_movie
 
             //services congig
             services.AddScoped<IActorsService, ActorsService>();
+            services.AddScoped<ICommingMovieService, CommingMovieService>();
             services.AddScoped<IProducersService, ProducersService>();
             services.AddScoped<ICinemasService, CinemasService>();
             services.AddScoped<IMoviesService, MoviesService>();
+            
             services.AddScoped<IOrdersService, OrdersService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
